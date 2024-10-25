@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/login_form_widget.dart';
-import '../models/login_model.dart';
+import 'package:demo/widgets/app_logo.dart';
+import 'package:demo/widgets/login_form.dart';
+import 'package:demo/widgets/sign_up_link.dart';
+import 'package:demo/models/initial_user.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,50 +13,73 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
+  bool _rememberMe = false;
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      // Retrieve email and password
       String email = _emailController.text;
       String password = _passwordController.text;
 
-      // Create a LoginModel (could be used in API calls, etc.)
-      final loginData = LoginModel(email: email, password: password);
-
-      // Example: print or use the login data
-      print('Email: ${loginData.email}, Password: ${loginData.password}');
-
-      // Navigate to the home page if login is successful
-      Navigator.pushReplacementNamed(context, '/home');
+      // Validate the credentials
+      if (email == InitialUser.email && password == InitialUser.password) {
+        // Successful login
+        print('Login successful!');
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        // Failed login
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Invalid email or password'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: LoginForm(
-          formKey: _formKey,
-          emailController: _emailController,
-          passwordController: _passwordController,
-          onLogin: _login,
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GestureDetector(
-          onTap: () {
-            // Navigate to RegisterPage
-            Navigator.pushNamed(context, '/register');
-          },
-          child: Text(
-            'Don\'t have an account? Register here!',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.blue),
+      backgroundColor: Color(0xFFF5F7FA), // Light background color
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 50),
+
+                // App Logo
+                const AppLogo(),
+                SizedBox(height: 30),
+
+                // Login Form
+                LoginForm(
+                  formKey: _formKey,
+                  emailController: _emailController,
+                  passwordController: _passwordController,
+                  isPasswordVisible: _isPasswordVisible,
+                  rememberMe: _rememberMe,
+                  onPasswordToggle: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                  onRememberMeToggle: (value) {
+                    setState(() {
+                      _rememberMe = value ?? false;
+                    });
+                  },
+                  onLogin: _login,
+                ),
+                SizedBox(height: 20),
+
+                // Sign Up link
+                const SignUpLink(),
+              ],
+            ),
           ),
         ),
       ),

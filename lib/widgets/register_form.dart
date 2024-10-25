@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 
-class LoginForm extends StatelessWidget {
+class RegisterForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final bool isPasswordVisible;
-  final bool rememberMe;
   final VoidCallback onPasswordToggle;
-  final ValueChanged<bool?> onRememberMeToggle;
-  final VoidCallback onLogin;
+  final VoidCallback onRegister;
 
-  const LoginForm({
+  const RegisterForm({
     Key? key,
     required this.formKey,
     required this.emailController,
     required this.passwordController,
     required this.isPasswordVisible,
-    required this.rememberMe,
     required this.onPasswordToggle,
-    required this.onRememberMeToggle,
-    required this.onLogin,
+    required this.onRegister,
   }) : super(key: key);
 
   @override
@@ -80,42 +76,13 @@ class LoginForm extends StatelessWidget {
               return null;
             },
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 30),
 
-          // Remember Me and Forgot Password Row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Checkbox(
-                    value: rememberMe,
-                    onChanged: onRememberMeToggle,
-                  ),
-                  Text('Remember Me'),
-                ],
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Add forgot password functionality here
-                },
-                child: Text(
-                  'Forgot Password?',
-                  style: TextStyle(
-                    color: Color(0xFF1E4FF1),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-
-          // Sign In Button
+          // Sign Up Button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: onLogin,
+              onPressed: onRegister,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF1E4FF1), // Blue button color
                 padding: EdgeInsets.symmetric(vertical: 14.0),
@@ -127,7 +94,7 @@ class LoginForm extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Sign In',
+                    'Sign Up',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
