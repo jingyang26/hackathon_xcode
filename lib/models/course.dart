@@ -1,6 +1,6 @@
 class Course {
   final String name;
-  final String description;
+  final String iconPath;
 
-  Course({required this.name, required this.description});
+  Course({required this.name, required this.iconPath});
 }

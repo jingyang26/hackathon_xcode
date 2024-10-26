@@ -1,3 +1,4 @@
+import 'package:demo/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart';
@@ -16,15 +17,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Tutor> tutors = [
-    Tutor(name: "Jotaro", rating: 4.8, imageUrl: 'assets\images\tutor.jpg', course: 'Physics'),
-    Tutor(name: "Ali bin Abu", rating: 5.0, imageUrl: 'assets\images\tutor.jpg', course: 'Add Math'),
-    Tutor(name: "Suzana Li", rating: 4.8, imageUrl: 'assets\images\tutor.jpg', course: 'Coding'),
+    Tutor(name: "Jotaro", rating: 4.8, imageUrl: 'assets/images/tutor.jpg', course: 'Physics'),
+    Tutor(name: "Ali bin Abu", rating: 5.0, imageUrl: 'assets/images/tutor.jpg', course: 'Add Math'),
+    Tutor(name: "Suzana Li", rating: 4.8, imageUrl: 'assets/images/tutor.jpg', course: 'Coding'),
   ];
 
   final List<Course> courses = [
-    Course(name: "Physics", description: "Learn the fundamentals of Physics."),
-    Course(name: "Biology", description: "Explore the wonders of Biology."),
-    Course(name: "Computer Science", description: "Introduction to programming and algorithms."),
+    
   ];
 
   @override
@@ -105,8 +104,8 @@ class AppBar extends StatelessWidget {
           end: Alignment.bottomRight,
           stops: [0.1, 0.5],
           colors: [
-            Color(0xff886ff2),
-            Color(0xff6849ef),
+            kPrimaryLight,
+            kPrimaryColor,
           ],
         ),
       ),

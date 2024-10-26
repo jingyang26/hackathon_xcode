@@ -9,11 +9,12 @@ class ProfileForm extends StatelessWidget {
   final TextEditingController phoneNumberController;
   final String? selectedGender;
   final List<String> genderOptions;
-  final Function(String?) onGenderChanged;
+  final ValueChanged<String?> onGenderChanged;
   final VoidCallback onSelectDate;
-  final VoidCallback onContinue;
+  final VoidCallback onSaveChanges;
 
-  ProfileForm({
+  const ProfileForm({
+    Key? key,
     required this.formKey,
     required this.fullNameController,
     required this.nickNameController,
@@ -24,8 +25,8 @@ class ProfileForm extends StatelessWidget {
     required this.genderOptions,
     required this.onGenderChanged,
     required this.onSelectDate,
-    required this.onContinue,
-  });
+    required this.onSaveChanges,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +34,14 @@ class ProfileForm extends StatelessWidget {
       key: formKey,
       child: Column(
         children: [
+          SizedBox(height: 20.0),
+
           // Full Name Field
           TextFormField(
             controller: fullNameController,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Color(0xFFE7ECF3), // Light field color
               hintText: 'Full Name',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0),
@@ -52,14 +55,14 @@ class ProfileForm extends StatelessWidget {
               return null;
             },
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 16.0),
 
           // Nick Name Field
           TextFormField(
             controller: nickNameController,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Color(0xFFE7ECF3),
               hintText: 'Nick Name',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0),
@@ -67,7 +70,7 @@ class ProfileForm extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 16.0),
 
           // Date of Birth Field
           TextFormField(
@@ -75,7 +78,7 @@ class ProfileForm extends StatelessWidget {
             readOnly: true,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Color(0xFFE7ECF3),
               hintText: 'Date of Birth',
               prefixIcon: Icon(Icons.calendar_today, color: Color(0xFF6A6A6A)),
               border: OutlineInputBorder(
@@ -84,21 +87,15 @@ class ProfileForm extends StatelessWidget {
               ),
             ),
             onTap: onSelectDate,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please select your date of birth';
-              }
-              return null;
-            },
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 16.0),
 
           // Email Field
           TextFormField(
             controller: emailController,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Color(0xFFE7ECF3),
               hintText: 'Email',
               prefixIcon: Icon(Icons.email, color: Color(0xFF6A6A6A)),
               border: OutlineInputBorder(
@@ -115,14 +112,14 @@ class ProfileForm extends StatelessWidget {
               return null;
             },
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 16.0),
 
           // Phone Number Field
           TextFormField(
             controller: phoneNumberController,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Color(0xFFE7ECF3),
               hintText: 'Phone Number',
               prefixIcon: Icon(Icons.phone, color: Color(0xFF6A6A6A)),
               border: OutlineInputBorder(
@@ -131,14 +128,8 @@ class ProfileForm extends StatelessWidget {
               ),
             ),
             keyboardType: TextInputType.phone,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your phone number';
-              }
-              return null;
-            },
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 16.0),
 
           // Gender Dropdown Field
           DropdownButtonFormField<String>(
@@ -152,48 +143,35 @@ class ProfileForm extends StatelessWidget {
             onChanged: onGenderChanged,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Color(0xFFE7ECF3),
               hintText: 'Gender',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.0),
                 borderSide: BorderSide.none,
               ),
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please select your gender';
-              }
-              return null;
-            },
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 30.0),
 
-          // Continue Button
+          // Save Changes Button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: onContinue,
+              onPressed: onSaveChanges,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF1E4FF1), // Blue button color
-                padding: EdgeInsets.symmetric(vertical: 14.0),
+                backgroundColor: Color(0xFF1F2C37), // Dark blue color
+                padding: EdgeInsets.symmetric(vertical: 16.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Continue',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Icon(Icons.arrow_forward, color: Colors.white),
-                ],
+              child: Text(
+                'Save changes',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
